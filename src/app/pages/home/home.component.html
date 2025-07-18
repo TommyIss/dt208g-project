@@ -1,1 +1,56 @@
-<p>home works!</p>
+<h2>Kurser</h2>
+
+<div class="filterForm">
+    <label for="searchFilter" id="filterLabel">Filtera kurser:</label>
+    <label for="subject" id="subjectLabel">Ämne:</label>
+    <br>
+
+    <input type="text" id="searchFilter" [(ngModel)]="searchPhrase" (input)="searchCourses()">
+
+    <select id="subjectList" [(ngModel)]="selectedSubject" (change)="choseSubject()">
+
+        <option value="Alla">Alla</option>
+
+        <option *ngFor="let subject of uniqueSubjects">{{subject}}</option>
+    </select>
+</div>
+
+<p>
+    Listar {{filteredCourses.length}} kurser av totalt {{courses.length}}
+</p>
+<table>
+    <thead>
+        <tr>
+            <th class="sortHeaders" data-order="codeOrder" (click)="sortByCode()">
+                Kod <em [class]="codeArrow"></em>
+            </th>
+            <th class="sortHeaders" data-order="nameOrder" (click)="sortByName()">
+                Kursnamn <em [class]="nameArrow"></em>
+            </th>
+            <th class="sortHeaders" data-order="pointsOrder" (click)="sortByPoints()">
+                Poäng <em [class]="pointsArrow"></em>
+            </th>
+            <th class="sortHeaders" data-order="subjectOrder" (click)="sortBySubject()">
+                Ämne <em [class]="subjectArrow"></em>
+            </th>
+            <th>
+                Kursplan
+            </th>
+            <th>
+                Lägg till
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(courses.length > 0) {
+            <tr *ngFor="let course of filteredCourses">
+                <td>{{course.courseCode}}</td>
+                <td>{{course.courseName}}</td>
+                <td>{{course.points}}</td>
+                <td>{{course.subject}}</td>
+                <td><a [href]="course.syllabus" target="_blank">Kursplan</a></td>
+                <td><button (click)="addCourse(course)">{{course.added ? 'Tillagd' : 'Lägg till'}}</button></td>
+            </tr>
+        }
+    </tbody>
+</table>
