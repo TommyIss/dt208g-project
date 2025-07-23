@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Course } from '../../models/course';
 import { CoursesService } from '../../services/courses.service';
+import { MyScheduleService } from '../../services/my-schedule.service';
 
 @Component({
   selector: 'app-home',
@@ -27,24 +28,23 @@ export class HomeComponent {
   pointsArrow: string = 'fas fa-caret-up';
   subjectArrow: string = 'fas fa-caret-up';
 
-  addText: string = 'Lägg till';
-  added: boolean = false;
-
-  constructor(private courseService: CoursesService) {}
+  constructor(private courseService: CoursesService, private myScheduleService: MyScheduleService) {}
 
   ngOnInit() {
     this.courseService.getCourses().subscribe((courses) => {
-      courses.forEach(course => {
-        course.added = false;
-      });
+      
       this.courses = courses;
       this.courses.forEach((course) => {
-      this.subjects.push(course.subject);
+        this.subjects.push(course.subject);
       });
+
       this.uniqueSubjects = [...new Set(this.subjects)];
-      this.filteredCourses = courses;
-      });
       
+      this.filteredCourses = courses;
+      
+      });
+    
+    
   }
 
   choseSubject() {
@@ -110,6 +110,7 @@ export class HomeComponent {
       );
     }
   }
+
   sortBySubject() {
     if(this.subjectOrder === 'desc') {
       this.subjectOrder = 'asc';
@@ -127,13 +128,40 @@ export class HomeComponent {
   }
 
   addCourse(course: Course) {
+
+    this.courseService.updateStatus(course, course.added).subscribe(() => {
+      
+      console.log(`Kurs ${course.courseName} är tillagd`);
+    });
     course.added = true;
+
+    this.myScheduleService.postData(course).subscribe({
+      next: response => {
+        console.log(response);
+      },
+      error: err => {
+        console.error(err);
+      }
+    });
+    
+
+    
   }
 
-  saveCourse(course: Course) {
+  // loadCourse() {
+  //   // localStorage.clear();
+
+  //   let savedCourses = JSON.parse(localStorage.getItem('savedCourses') || '[]');
+
+  //   this.filteredCourses.forEach(course => {
+  //     let matchedCourses = savedCourses.find((matchedCourse: Course) => 
+  //       matchedCourse.courseCode === course.courseCode
+  //     );
+  //     if(matchedCourses) {
+  //       course.added = true;
+  //     }
+  //   });
+
     
-    localStorage.setItem('course', JSON.stringify(course));
-    
-    // course: Course = JSON.parse(localStorage.getItem('savedCourse') || '{}');
-  }
+  // }
 }
