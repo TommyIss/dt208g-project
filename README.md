@@ -1,59 +1,21 @@
-# Project
+# Projektuppgift i kursen DT208G, Programmering i TypeScript
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.8.
+## Uppgiftbeskrivning
+Uppgiften handlar om att skapa en webbplats för elever som består av två sidor:
+- Kurs-sida där användare kan se kurser, filtrera dem via sökfält på kurskod och kursnamn, sortera kurser i stigande eller fallande ordning enligt namn, kurskod, poäng samt ämne, och möjligt att lägga till kurser i ramschema
+- Ramschema-sida där användare kan se vilka kurser som är tillagda, antalpoäng och möjlighet att ta bort en kurs 
 
-## Development server
+## Min applikation
+Min applikation har skapats med Angular samt TypeScript. Webbplatsen består av två undersidor:
+- En för att visa kurser, söka kurser via sökfält samt genom att välja ett ämne, sortera dem i stigande eller fallande ordning beroende av namn, kurskod, poäng samt ämne, och lägga till kurs.
+- En för ramschema av de tillagda kurser, och finns möjlighet för sortering samt filtrering av kurserna, se antal högskolepoäng och även möjlighet för att ta bort kurser.
 
-To start a local development server, run:
+Två komponenter har skapats, en för varje undersida. Routing har använts för att navigera mellan komponenterna.
 
-```bash
-ng serve
-```
+Två tjänster har skapats: 
+- Den ena för att hämta data från json-filen samt uppdatera kursens status när användaren lägger till en kurs eller tar bort från ramschemat.   
+- Den andra för att lägga till kurser från kurs-sida till ramschema, lista ut kurserna med möjlighet att ta bort dem.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Användaren kan lägga till kursen bara en gång och kan se efter det att knappen blir inaktiverad och dess text har ändrats till "Tillagd" för undvika dubletter av kurs i ramschemat.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### Tommy Issa, tois2401
