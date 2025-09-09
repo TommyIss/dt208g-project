@@ -50,23 +50,23 @@ export class MyScheduleComponent {
     
   }
 
+  filterCourses() {
+    this.filteredCourses = this.courses.filter((course) => {
+      let matchSubject = this.selectedSubject === 'Alla' || course.subject.toLowerCase() === this.selectedSubject.toLowerCase();
+
+      let matchSearch = this.searchPhrase.trim() === '' || 
+      course.courseCode.toLowerCase().includes(this.searchPhrase.toLowerCase()) ||
+      course.courseName.toLowerCase().includes(this.searchPhrase.toLowerCase());
+
+      return matchSubject && matchSearch;
+    });
+  }
   choseSubject() {
-    if(this.selectedSubject !== 'Alla') {
-
-      this.filteredCourses = this.courses.filter((course) => 
-        course.subject.toLowerCase() === this.selectedSubject.toLowerCase()
-      );
-
-    } else {
-      this.filteredCourses = this.courses;
-    }  
+    this.filterCourses();
   }
 
   searchCourses() {
-    this.filteredCourses = this.courses.filter((course) => 
-      course.courseCode.toLowerCase().includes(this.searchPhrase.toLowerCase()) ||
-      course.courseName.toLowerCase().includes(this.searchPhrase.toLowerCase())
-    );
+    this.filterCourses();
   }
 
   sortByCode() {

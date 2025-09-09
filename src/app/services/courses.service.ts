@@ -16,7 +16,7 @@ export class CoursesService {
   getCourses(): Observable<Course[]> {
     return this.http.get<Course[]>(this.url).pipe(
       map((courses: Course[]) => {
-
+        // localStorage.clear();
         this.savedCourses = JSON.parse(localStorage.getItem('savedCourses') || '[]');
         
 
@@ -30,7 +30,7 @@ export class CoursesService {
       })
     );
 
-    // localStorage.clear();
+    
     // return this.http.get<Course[]>(this.url);
 
   }

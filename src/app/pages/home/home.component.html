@@ -42,7 +42,7 @@
         </tr>
     </thead>
     <tbody>
-        @if(courses.length > 0) {
+        @if(filteredCourses.length > 0) {
             <tr *ngFor="let course of filteredCourses">
                 <td>{{course.courseCode}}</td>
                 <td>{{course.courseName}}</td>
@@ -51,6 +51,8 @@
                 <td><a [href]="course.syllabus" target="_blank">Kursplan</a></td>
                 <td><button (click)="addCourse(course)" [disabled]="course.added">{{course.added ? 'Tillagd' : 'Lägg till'}}</button></td>
             </tr>
+        } @else {
+            <p>Inga kurser hittades</p>
         }
     </tbody>
 </table>
